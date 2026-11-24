@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+/* Tokens are locked in .ulpi/design/DESIGN.md. Every colour was sampled from Sam's footage. */
+@theme {
+  --color-window: #eeefec;
+  --color-ink: #181614;
+  --color-kilim: #923634;
+  --color-led: #54b449;
+  --color-mahogany: #5f3937;
+  --color-pine: #7b5d40;
+  --color-white: #ffffff;
+
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-martian), ui-monospace, Menlo, monospace;
+  --font-sans: var(--font-serif);
+
+  --text-log: 0.8125rem;
+  --text-log--line-height: 1.35;
+  --text-body: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
+  --text-body--line-height: 1.55;
+  --text-title: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  --text-title--line-height: 1.12;
+  --text-display: clamp(3rem, 1.8rem + 5vw, 7rem);
+  --text-display--line-height: 0.98;
+
+  --ease-ui: cubic-bezier(0.2, 0, 0, 1);
+  --container-content: 1280px;
+}
+
+@layer base {
+  html {
+    background: var(--color-window);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+  body {
+    font-family: var(--font-serif);
+    font-size: var(--text-body);
+    line-height: 1.55;
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-kilim);
+    color: var(--color-white);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+  .on-ink :focus-visible,
+  .on-kilim :focus-visible {
+    outline-color: var(--color-white);
+  }
+}
+
+@layer components {
+  .type-name {
+    font-variation-settings: "opsz" 72;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 0.88;
+  }
+  .type-display {
+    font-size: var(--text-display);
+    line-height: var(--text-display--line-height);
+    font-variation-settings: "opsz" 72;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .type-title {
+    font-size: var(--text-title);
+    line-height: var(--text-title--line-height);
+    font-variation-settings: "opsz" 36;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  /* The log: dates, times, prices, instruments, video titles. */
+  .type-log {
+    font-family: var(--font-mono);
+    font-size: var(--text-log);
+    line-height: var(--text-log--line-height);
+    font-variation-settings: "wdth" 87.5;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .measure {
+    max-width: 62ch;
+  }
+
+  .link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    transition: color 160ms var(--ease-ui), text-decoration-thickness 160ms var(--ease-ui);
+  }
+  .link:hover {
+    color: var(--color-kilim);
+    text-decoration-thickness: 2px;
+  }
+  .on-ink .link:hover,
+  .on-kilim .link:hover {
+    color: inherit;
+  }
+
+  /* The one button: square, ink, the log face. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3rem;
+    padding: 0.875rem 1.375rem;
+    background: var(--color-ink);
+    color: var(--color-white);
+    font-family: var(--font-mono);
+    font-size: var(--text-log);
+    font-variation-settings: "wdth" 87.5;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: background-color 160ms var(--ease-ui), color 160ms var(--ease-ui);
+  }
+  .btn:hover {
+    background: var(--color-kilim);
+  }
+  .btn-line {
+    background: transparent;
+    color: var(--color-ink);
+    box-shadow: inset 0 0 0 1px var(--color-ink);
+  }
+  .btn-line:hover {
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+  .on-ink .btn,
+  .on-kilim .btn {
+    background: var(--color-white);
+    color: var(--color-ink);
+  }
+  .on-ink .btn:hover,
+  .on-kilim .btn:hover {
+    background: var(--color-window);
+  }
+
+  .field {
+    display: block;
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.625rem 0.875rem;
+    background: var(--color-white);
+    border: 1px solid var(--color-ink);
+    border-radius: 0;
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    font-variation-settings: normal;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .field:focus-visible {
+    outline: 2px solid var(--color-kilim);
+    outline-offset: 0;
+  }
+
+  /* The track ring, after the lit track knobs on Sam's loop station. */
+  .ring-knob {
+    position: relative;
+    display: inline-block;
+    flex: none;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 50% 38%, #3a3633 0%, #181614 62%);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.08);
+  }
+  .ring-knob::after {
+    content: "";
+    position: absolute;
+    inset: 16%;
+    border-radius: 9999px;
+    box-shadow: inset 0 0 0 2px rgb(84 180 73 / 0.25);
+    transition: box-shadow 120ms var(--ease-ui);
+  }
+  .ring-knob[data-lit="true"]::after,
+  .ring-hover:hover .ring-knob::after,
+  .ring-hover:focus-visible .ring-knob::after {
+    box-shadow:
+      inset 0 0 0 2px var(--color-led),
+      0 0 6px 0 rgb(84 180 73 / 0.55),
+      inset 0 0 6px 0 rgb(84 180 73 / 0.45);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}
